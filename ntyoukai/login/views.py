@@ -5,7 +5,6 @@ from django.contrib.auth import logout as user_logout
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
-#from ntyoukai.login.models import User, authenticate
 from ntyoukai.login.forms import LoginForm, RegistrationForm
 
 """
@@ -45,13 +44,17 @@ register page and function
 def register(request):
     if request.user.is_authenticated():
         redirect("/")
+
     f = RegistrationForm()
     if request.method == "POST":
         f = RegistrationForm(request.POST)
+
         if f.is_valid():
             user = User.objects.create_user(
                 username=f.cleaned_data['username'],
+                email=f.cleaned_data['email'],
                 password=f.cleaned_data['password'])
-            redirect("/")
+            return redirect("/")
+            
     return render_to_response("register.html", {'form': f}, 
         context_instance=RequestContext(request))

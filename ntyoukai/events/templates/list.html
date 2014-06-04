@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block main_content %}
+<div class="header">
+	<h2>Events</h2>
+</div>
+<p><a href="{% url 'ntyoukai.events.views.new' %}">Create event.</a></p>
+{% if invites.count %}
+<hr />
+<div class="invites">
+	<h3>You are invited to:</h3>
+	<ul>
+		{% for invite in invites %}
+		<li><a href="{% url 'ntyoukai.events.views.details_invited' invite.event.get.pk invite.pk %}">
+			{{ invite.event.get }}{% if invite.event.get.start_of_event %} - {{ invite.event.get.start_of_event }}{% endif %}
+		</a></li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+</div>
+<hr />
+<div class="events">
+	<h3>You are attending to:</h3>
+	{% if events %}
+	<ul>
+		{% for event in events %}
+		<li><a href="{% url 'ntyoukai.events.views.details' event.pk %}">
+			{{ event }}{% if event.start_of_event %} - {{ event.start_of_event }}{% endif %}
+		</a></li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<p>You are not attending to any events.</p>
+	{% endif %}
+</div>
+{% endblock %}

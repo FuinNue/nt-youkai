@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<div class="information">
+	<h2>{{ event.name }}</h2>
+	<p>{{ event.description }}</p>
+	{% if event.start %}
+	<p>{{ event.start }}{% if event.end %} - {{ event.end }}{% endif %}</p>
+	{% else %}<p>Date not set</p>{% endif %}
+	<p>Owner: {{ event.owner }}</p>
+	<p>
+		{% if user not in event.attendants.all %}
+		<p><a href="{% url 'ntyoukai.events.views.accept_invite' event.pk invite.pk %}">Attend</a> | <a href="{% url 'ntyoukai.events.views.reject_invite' event.pk invite.pk %}">Reject</a></p>
+		{% endif %}
+		{% if user in event.attendants.all %}
+		<p><a href="{% url 'ntyoukai.events.views.leave' event.pk %}">Leave event</a></p>
+		{% endif %}
+	</p>
+</div>
+
+<div class="people">	
+	{% if event.moderators.count %}
+	<h3>Moderators</h3>
+	<ul>
+		{% for u in event.moderators.all %}
+		<li>{{ u }} {% if user == event.owner %}<a href="">Remove</a>{% endif %}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+
+	<h3>Attendants</h3>
+	{% if event.attendants.count %}
+		<ul>
+			{% for u in event.attendants.all %}
+			<li>{{ u }} {% if user in event.moderators.all or user == event.owner %}<a href="{% url 'ntyoukai.events.views.remove_user' event.pk u.pk %}">Remove</a>{% endif %}</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No people are currently attending.</p>
+	{% endif %}
+
+	<h3>Invited people</h3>
+	{% if user in event.moderators.all or user == event.owner %}
+		<p><a href="{% url 'ntyoukai.events.views.invite' event.pk %}">Invite people</a></p>
+	{% endif %}
+	{% if event.invited.count %}
+		<ul>
+			{% for u in event.invited.all %}
+			<li>{{ u }} {% if user in event.moderators.all or user == event.owner %}<a href="{% url 'ntyoukai.events.views.reject_invite' event.pk u.pk %}">Remove</a>{% endif %}</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No people are invited.</p>
+	{% endif %}
+</div>
+
+<div class="entries">
+	<h3>Entries</h3>
+	{% if event.entries.count %}
+		{% for entry in event.entries.all %}
+			<hr />
+			<h4>{{ entry }}:</h4>
+			<p>{{ entry.content }}</p>
+		{% endfor %}
+	{% else %}
+		<p>No entries.</p>
+	{% endif %}
+	{% if user in event.moderators.all or user == event.owner %}
+	<a href="{% url 'ntyoukai.events.views.post_entry' event.pk %}">Post new entry</a>
+	{% endif %}
+</div>
+
+{% endblock %}

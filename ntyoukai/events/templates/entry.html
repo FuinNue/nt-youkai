@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block main_content %}
+<h1>Post entry in {{ event }}</h1>
+<form action="{% url 'ntyoukai.events.views.post_entry' event.pk %}" method="POST">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Post" />
+</form>
+{% endblock %}

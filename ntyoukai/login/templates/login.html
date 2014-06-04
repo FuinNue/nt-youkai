@@ -7,6 +7,7 @@
     {% if failed %}
     <p>Wrong username or password.</p>
     {% endif %}
-    <input type="submit" value="login">
+    <p><input type="submit" value="login"></p>
 </form>
+<p><a href="{% url 'ntyoukai.login.views.register' %}">Register</a></p>
 {% endblock %}
