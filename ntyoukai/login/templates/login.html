@@ -1,5 +1,7 @@
-{% extends "base.html" %}
-{% block main_content %}
+<html>
+<head>
+</head>
+<body>
 <h1>Login!</h1>
 <form action="#" method="post">
     {{ form.as_p }}
@@ -10,4 +12,5 @@
     <p><input type="submit" value="login"></p>
 </form>
 <p><a href="{% url 'ntyoukai.login.views.register' %}">Register</a></p>
-{% endblock %}
+</body>
+</html>

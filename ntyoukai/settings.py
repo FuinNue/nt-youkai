@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
-ALPHA_MAXIMUM_USERS = 2
+ALPHA_MAXIMUM_USERS = 10
 
 ALLOWED_HOSTS = []
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'ntyoukai.login',
     'ntyoukai.events',
+    'ntyoukai.main',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -84,6 +85,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
 TEMPLATE_DIRS = (
     'ntyoukai/templates',

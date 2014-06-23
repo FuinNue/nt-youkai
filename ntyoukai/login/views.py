@@ -50,6 +50,7 @@ def register(request):
         f = RegistrationForm(request.POST)
 
         if f.is_valid():
+            #f.validate_alpha_maximum_users()
             user = User.objects.create_user(
                 username=f.cleaned_data['username'],
                 email=f.cleaned_data['email'],

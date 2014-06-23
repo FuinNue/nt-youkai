@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block main_content %}
-<div class="header">
+<div class="header row">
 	<h2>Events</h2>
 </div>
 <p><a href="{% url 'ntyoukai.events.views.new' %}">Create event.</a></p>
 {% if invites.count %}
 <hr />
-<div class="invites">
+<div class="invites row">
 	<h3>You are invited to:</h3>
 	<ul>
 		{% for invite in invites %}
@@ -15,10 +15,10 @@
 		</a></li>
 		{% endfor %}
 	</ul>
-	{% endif %}
 </div>
+{% endif %}
 <hr />
-<div class="events">
+<div class="events row">
 	<h3>You are attending to:</h3>
 	{% if events %}
 	<ul>

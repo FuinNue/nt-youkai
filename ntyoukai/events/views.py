@@ -141,9 +141,8 @@ Post an entry
 @login_required(login_url='/user/login/')
 def post_entry(request, event_pk):
 	event = get_object_or_404(Event, pk=event_pk)
-	if request.user not in event.moderators.all() or \
+	if request.user not in event.moderators.all() and \
 	request.user != event.owner:
-		print("FAG")
 		raise Http404
 
 	form = EntryForm()
@@ -158,7 +157,7 @@ def post_entry(request, event_pk):
 			return redirect("/events/event/%i/" % event.pk)
 
 	return render_to_response("entry.html", 
-		{'event': event, 'form': form},
+		{'event': event, 'form': form}, 
 		context_instance=RequestContext(request))
 
 

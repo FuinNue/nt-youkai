@@ -13,7 +13,7 @@ class Entry(models.Model):
 	creation_date = models.DateTimeField(auto_now=True, editable=False)
 
 	def __unicode__(self):
-		return 'Update by %s (%s)' % (self.author, self.creation_date)
+		return '%s (%s)' % (self.author, self.creation_date)
 
 """
 An invite to an event
